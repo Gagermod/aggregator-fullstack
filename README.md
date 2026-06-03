@@ -2,5 +2,7 @@
 Пользователи могут добавлять блогеров в избранное, предлагать своих через форму. Админ одобряет или отклоняет заявки.
 
 Стек
+
 Фронт: React, Vite, Zustand, React Router, SCSS
+
 Бек: NestJS, TypeORM, PostgreSQL, JWT, argon2
