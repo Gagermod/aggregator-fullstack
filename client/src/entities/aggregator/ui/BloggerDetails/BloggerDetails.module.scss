@@ -1,0 +1,102 @@
+%pseudo-element-base {
+  position: absolute;
+  left: 0;
+  color: var(--color-gray-muted);
+}
+
+.bloggerImage {
+  width: 100%;
+  border: var(--border);
+  object-fit: cover;
+
+  @include mobile {
+    display: block;
+    width: 200px;
+    height: 156px;
+    margin-top: 10px;
+    margin-inline: auto;
+  }
+}
+
+.bloggerName {
+  position: relative;
+  padding-left: 85px;
+
+  &::before {
+    @extend %pseudo-element-base;
+    content: '├─ name:';
+  }
+}
+
+.status {
+  position: relative;
+  padding-left: 105px;
+
+  &::before {
+    @extend %pseudo-element-base;
+    content: '└─ status:';
+  }
+}
+
+.domain {
+  @include blink;
+  position: relative;
+  padding-left: 105px;
+
+  &::before {
+    @extend %pseudo-element-base;
+    content: '├─ source:';
+  }
+
+  @include tablet {
+    display: none;
+  }
+}
+
+.views {
+  position: relative;
+  padding-left: 105px;
+
+  &::before {
+    @extend %pseudo-element-base;
+    content: '├─ views:';
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.bloggerName,
+.status,
+.domain,
+.views {
+  line-height: 2;
+  color: var(--color-green);
+}
+
+.bloggerStatus {
+  @include mobile {
+    width: 100%;
+    border-top: var(--border);
+  }
+}
+
+.adminActions {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.removeBloggerButton {
+  width: 90%;
+  padding: 10px 20px;
+  border: none;
+  background-color: #c0392b;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

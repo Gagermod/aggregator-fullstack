@@ -1,0 +1,33 @@
+.header {
+  border-bottom: var(--border);
+  background-color: var(--color-black-elevate);
+  padding-block: 12px;
+  padding-inline: var(--padding);
+}
+
+.container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--padding);
+}
+
+.decor {
+  @include mobile {
+    display: none;
+  }
+}
+
+.AuthButton {
+  border: var(--border);
+  background-color: var(--color-black-elevate);
+  color: var(--color-white);
+  padding-inline: 10px;
+
+  @include hover {
+    border-color: var(--color-green);
+    color: var(--color-green);
+    box-shadow: var(--box-shadow);
+  }
+}

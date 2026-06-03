@@ -1,0 +1,24 @@
+.panelTitle {
+  display: flex;
+  align-items: center;
+  border-bottom: var(--border);
+  padding-bottom: 8px;
+
+  h2 {
+    margin-right: 10px;
+  }
+
+  @include tablet {
+    display: none;
+  }
+}
+
+.decorContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.decor {
+  color: var(--color-green);
+}

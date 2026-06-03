@@ -1,0 +1,14 @@
+.logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 12px;
+}
+
+.logoSign {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-green);
+}

@@ -1,0 +1,54 @@
+.titleContainer {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: var(--border);
+  background-color: var(--color-black-elevate);
+  row-gap: 20px;
+}
+
+.input,
+.select {
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: var(--color-gray);
+  color: var(--color-white);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  &:hover,
+  &:focus {
+    border-color: var(--color-green);
+    box-shadow: var(--box-shadow);
+  }
+}
+
+.select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+}
+
+.submit {
+  @include blink;
+
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  background-color: inherit;
+  color: var(--color-green);
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}

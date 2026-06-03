@@ -1,0 +1,84 @@
+### Register
+POST http://localhost:3000/api/user
+Content-Type: application/json
+
+{
+  "login": "test1user",
+  "password": "12345678"
+}
+
+### Login
+# @name login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "login": "test1user",
+  "password": "12345678"
+}
+
+> {%
+  client.global.set("auth_token", response.body.token);
+%}
+
+### Get Profile
+GET http://localhost:3000/api/auth/profile
+Authorization: Bearer {{auth_token}}
+
+### Get all bloggers
+GET http://localhost:3000/api/blogger
+
+### Toggle Favorite (Add)
+POST http://localhost:3000/api/user/favorites/1
+Authorization: Bearer {{auth_token}}
+
+### Toggle Favorite (Remove)
+POST http://localhost:3000/api/user/favorites/1
+Authorization: Bearer {{auth_token}}
+
+### Sync Favorites
+POST http://localhost:3000/api/user/favorites/sync
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "bloggerIds": [
+    "2",
+    "3"
+  ]
+}
+
+
+
+### Create a suggestion
+# @name createSuggestion
+POST http://localhost:3000/api/suggestions
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "bloggerName": "NewBloggerName from test",
+  "contentType": "GAMES",
+  "links": [
+    {
+      "title": "New Game Review",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "type": "VIDEO"
+    }
+  ]
+}
+
+### Get all suggestions
+# @name getPendingSuggestions
+GET http://localhost:3000/api/suggestions?status=pending
+Authorization: Bearer {{admin_token}}
+
+### Approve a suggestion
+# @name approveSuggestion
+PATCH http://localhost:3000/api/suggestions/{{createSuggestion.response.body.id}}/approve
+Authorization: Bearer {{admin_token}}
+
+### Reject a suggestion
+# @name rejectSuggestion
+PATCH http://localhost:3000/api/suggestions/{{createSuggestion.response.body.id}}/reject
+Authorization: Bearer {{admin_token}}

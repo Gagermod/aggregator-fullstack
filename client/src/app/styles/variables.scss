@@ -1,0 +1,36 @@
+:root {
+  --color-white: #ffffff;
+
+  --color-black: #0c0c0c;
+  --color-black-elevate: #1a1a1a;
+
+  --color-green: #00ff00;
+
+  --color-gray: #333333;
+  --color-gray-muted: #666666;
+
+  --border: var(--border-width) solid var(--color-gray);
+
+  --border-width: 1px;
+
+  --border-radius: 10px;
+
+  --font-family-base: 'IBM Plex Mono', sans-serif;
+
+  --container-width: #{fluid-to-laptop(
+      $container-desktop-width,
+      $container-laptop-width
+    )};
+  --container-padding-x: 16px;
+
+  --section-padding-y: 12px;
+
+  --transition-duration: 0.2s;
+  --transition-duration-longer: 0.4s;
+
+  --box-shadow: 0 0 30px rgba(0, 255, 0, 0.15);
+  --shadowOffset: 30px;
+
+  --padding: 24px;
+  --mobile-padding: 10px;
+}

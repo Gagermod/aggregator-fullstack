@@ -1,0 +1,27 @@
+.leftPanel {
+  position: relative;
+}
+
+.leftPanelControls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  @include tablet {
+    padding-right: 100px;
+  }
+
+  @include mobile {
+    padding-top: var(--padding);
+  }
+}
+
+.controlsGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  @include tablet {
+    margin-bottom: 20px;
+  }
+}

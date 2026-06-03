@@ -1,0 +1,41 @@
+.bloggersItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: var(--padding);
+  padding-block: 12px;
+  padding-inline: 14px;
+  background: var(--color-black-elevate);
+  border: var(--border);
+  transition: var(--transition-duration);
+
+  &.selected {
+    border-color: var(--color-green);
+  }
+
+  @include hover {
+    &:not(:has(span:hover)) {
+      border-color: var(--color-green);
+      box-shadow: var(--box-shadow);
+    }
+  }
+}
+
+.blogger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bloggerName {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.image {
+  height: 55px;
+  width: 55px;
+  object-fit: cover;
+  border: var(--border);
+}

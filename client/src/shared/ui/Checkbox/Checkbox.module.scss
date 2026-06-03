@@ -1,0 +1,30 @@
+.checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--color-gray-muted);
+  transition-duration: var(--transition-duration);
+  user-select: none;
+
+  &.active {
+    color: var(--color-green);
+  }
+
+  @include hover {
+    &:not(.active) {
+      color: var(--color-white);
+      border-color: var(--color-white);
+    }
+  }
+}
+
+.starLabel {
+  @include flex-center();
+  @include square(44px);
+
+  gap: 10px;
+}
+
+.starLabel:has(span.text) {
+  @include square(auto);
+}

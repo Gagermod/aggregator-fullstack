@@ -1,0 +1,92 @@
+.field {
+  --fieldInputPaddingX: 24px;
+  position: relative;
+
+  &:has(.input:not(:placeholder-shown)) .label {
+    display: none;
+  }
+
+  &:hover .decor {
+    color: var(--color-green);
+  }
+
+  &:focus-within .decor {
+    color: var(--color-green);
+  }
+
+  &:has(input:placeholder-shown) .label {
+    @include blink;
+  }
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  left: var(--fieldInputPaddingX);
+  translate: 0 -50%;
+  pointer-events: none;
+
+  @include tablet {
+    top: 35%;
+  }
+}
+
+.decor {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+
+  @include tablet {
+    top: 35%;
+  }
+}
+
+.input {
+  width: 100%;
+  padding: 12px var(--fieldInputPaddingX);
+  caret-color: var(--color-white);
+  color: var(--color-white);
+  background-color: var(--color-black-elevate);
+  border: var(--border);
+  transition: var(--transition-duration);
+
+  &:hover,
+  &:focus {
+    border-color: var(--color-green);
+    box-shadow: var(--box-shadow);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &[type='search'] {
+    &:placeholder-shown {
+      padding-right: calc(var(--fieldInputPaddingX) * 2);
+    }
+  }
+
+  @include tablet {
+    padding-block: 7px;
+    margin-top: -7px;
+  }
+}
+
+.clearButton {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: var(--border);
+  cursor: pointer;
+  color: var(--color-white);
+  background-color: var(--color-black);
+  padding: 4px 8px;
+
+  @include tablet {
+    top: 35%;
+    padding: 2px 4px;
+  }
+}

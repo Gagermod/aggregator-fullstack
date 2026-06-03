@@ -1,0 +1,25 @@
+#root .Toastify__toast {
+  border: var(--border);
+  border-radius: 0;
+  background-color: var(--color-black-elevate);
+  font-family: var(--font-family-base);
+  font-size: 1rem;
+  color: var(--color-white);
+}
+
+#root .Toastify__close-button {
+  color: var(--color-green);
+  opacity: 1;
+}
+
+#root .Toastify__toast-container {
+  bottom: 50px;
+}
+
+#root .Toastify__progress-bar {
+  background: var(--color-green);
+}
+
+#root .Toastify__progress-bar-container {
+  background: var(--color-black-elevate);
+}

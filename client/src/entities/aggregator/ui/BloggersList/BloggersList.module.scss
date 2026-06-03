@@ -1,0 +1,37 @@
+.bloggersList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-block: var(--shadowOffset);
+  padding-inline: var(--shadowOffset);
+  border-top: var(--border);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-green) transparent;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-green);
+  }
+
+  @include tablet {
+    height: 100vh;
+    padding-inline: 0;
+  }
+}
+
+.notFoundBlogger {
+  @include blink;
+
+  padding: 30px;
+  border-top: var(--border);
+  width: 100%;
+  text-align: center;
+}

@@ -1,0 +1,74 @@
+.selectWrapper {
+  position: relative;
+  user-select: none;
+}
+
+.selectHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: var(--color-gray);
+  color: var(--color-white);
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    border-color: var(--color-green);
+    box-shadow: var(--box-shadow);
+  }
+}
+
+.arrow {
+  display: inline-block;
+  padding: 3px;
+  border: solid var(--color-white);
+  border-width: 0 2px 2px 0;
+  transition: transform 0.2s;
+  transform: rotate(45deg);
+}
+
+.arrow.open {
+  transform: rotate(-135deg);
+}
+
+.optionsList {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  max-height: 200px;
+  margin: 5px 0 0 0;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: var(--color-gray);
+  overflow-y: auto;
+  list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-green) transparent;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-green);
+  }
+}
+
+.option {
+  padding: 12px;
+  color: var(--color-white);
+  cursor: pointer;
+
+  &:hover {
+    background-color: #333;
+    color: var(--color-green);
+  }
+}

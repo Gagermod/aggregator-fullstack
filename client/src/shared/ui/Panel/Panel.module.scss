@@ -1,0 +1,29 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: var(--padding);
+  overflow-x: hidden;
+  overflow-y: auto;
+  row-gap: var(--padding);
+
+  @include laptop {
+    padding-inline: var(--mobile-padding);
+  }
+
+  @include tablet {
+    row-gap: var(--mobile-padding);
+  }
+
+  @include mobile {
+    padding-block: 0;
+  }
+}
+
+.right {
+  @include mobile {
+    align-items: center;
+    padding: 10px 0 0;
+    overflow-y: hidden;
+  }
+}

@@ -1,0 +1,39 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  label {
+    font-size: 0.9rem;
+    color: var(--color-gray-muted);
+  }
+
+  input {
+    padding: 8px;
+    border: var(--border);
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border-radius: 3px;
+  }
+}
+
+.submitButton {
+  padding: 10px;
+  background-color: var(--color-green);
+  color: var(--color-black);
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}

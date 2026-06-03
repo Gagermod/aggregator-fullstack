@@ -1,0 +1,86 @@
+html {
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-black);
+  font-family: var(--font-family-base);
+  font-size: 1rem;
+  color: var(--color-gray-muted);
+}
+
+main {
+  flex-grow: 1;
+}
+
+h1,
+.h1 {
+  color: var(--color-green);
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+h3,
+.h3 {
+  color: var(--color-white);
+}
+
+h4,
+.h4 {
+  @include fluid-text(14, 12);
+
+  font-weight: 400;
+  color: var(--color-azure-46);
+}
+
+a,
+button,
+label,
+input,
+textarea,
+select,
+svg * {
+  transition-duration: var(--transition-duration);
+}
+
+a {
+  color: inherit;
+
+  &[class] {
+    text-decoration: none;
+  }
+}
+
+:focus-visible {
+  @include focus-visible;
+}
+
+mark {
+  background-color: transparent;
+  color: var(--color-green);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
