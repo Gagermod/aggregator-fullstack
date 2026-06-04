@@ -13,7 +13,7 @@ export const dataSourceOptions: DataSourceOptions = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  synchronize: false, // This is important
+  synchronize: false,
   dropSchema: false,
   entities: [User, Blogger, Suggestion],
   migrations: ['dist/migrations/*.js'],

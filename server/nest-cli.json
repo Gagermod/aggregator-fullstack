@@ -4,7 +4,10 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "deleteOutDir": true,
-    "assets": ["client/public/**/*"],
+    "outDir": "./dist",
+    "assets": [
+      "client/public/**/*"
+    ],
     "watchAssets": true
   }
 }
