@@ -22,9 +22,9 @@ import { Suggestion } from './suggestion/suggestion.entity'
         entities: [User, Blogger, Suggestion],
         synchronize: false,
         dropSchema: false,
-        ssl: configService.get('DATABASE_URL')?.includes('sslmode=require')
-          ? { rejectUnauthorized: false }
-          : false,
+        ssl: {
+          rejectUnauthorized: false,
+        },
       }),
       inject: [ConfigService],
     }),
