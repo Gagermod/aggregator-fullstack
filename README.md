@@ -6,3 +6,6 @@
 Фронт: React, Vite, Zustand, React Router, SCSS
 
 Бек: NestJS, TypeORM, PostgreSQL, JWT, argon2
+
+
+https://aggregator-frontend-tan.vercel.app/
