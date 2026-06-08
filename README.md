@@ -8,4 +8,4 @@
 Бек: NestJS, TypeORM, PostgreSQL, JWT, argon2
 
 
-https://aggregator-frontend-tan.vercel.app/
+https://aggregator-frontend-tan.vercel.app/ (только с VPN)
