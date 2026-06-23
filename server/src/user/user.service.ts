@@ -61,12 +61,7 @@ export class UserService {
   async findOneById(id: string): Promise<User | null> {
     return this.userRepository
       .createQueryBuilder('user')
-      .select([
-        'user.id',
-        'user.login',
-        'user.role',
-        'user.viewedBloggerIds',
-      ])
+      .select(['user.id', 'user.login', 'user.role', 'user.viewedBloggerIds'])
       .where('user.id = :id', { id })
       .leftJoinAndSelect('user.favoriteBloggers', 'favoriteBloggers')
       .getOne()
@@ -77,7 +72,7 @@ export class UserService {
       async (transactionalEntityManager) => {
         const user = await transactionalEntityManager
           .createQueryBuilder(User, 'user')
-          .setLock('pessimistic_write')
+          // .setLock('pessimistic_write')
           .leftJoinAndSelect('user.favoriteBloggers', 'favoriteBloggers')
           .where('user.id = :userId', { userId })
           .getOne()
@@ -113,16 +108,21 @@ export class UserService {
   async syncFavorites(userId: string, bloggerIds: string[]): Promise<User> {
     return this.userRepository.manager.transaction(
       async (transactionalEntityManager) => {
-        const user = await transactionalEntityManager
-          .createQueryBuilder(User, 'user')
-          .setLock('pessimistic_write')
-          .leftJoinAndSelect('user.favoriteBloggers', 'favoriteBloggers')
-          .where('user.id = :userId', { userId })
-          .getOne()
+        const user = await transactionalEntityManager.findOne(User, {
+          where: { id: userId },
+          relations: ['favoriteBloggers'],
+        })
 
         if (!user) {
           throw new NotFoundException(`User with ID ${userId} not found`)
         }
+
+        await transactionalEntityManager
+          .createQueryBuilder()
+          .delete()
+          .from('user_favorite_bloggers')
+          .where('"userId" = :userId', { userId })
+          .execute()
 
         const bloggers = await this.bloggerService.findByIds(bloggerIds)
         if (bloggers.length !== bloggerIds.length) {

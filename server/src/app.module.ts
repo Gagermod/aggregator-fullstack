@@ -16,16 +16,34 @@ import { Suggestion } from './suggestion/suggestion.entity'
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        url: configService.get('DATABASE_URL'),
-        entities: [User, Blogger, Suggestion],
-        synchronize: false,
-        dropSchema: false,
-        ssl: {
-          rejectUnauthorized: false,
-        },
-      }),
+      useFactory: (configService: ConfigService) => {
+        const isProduction = configService.get('NODE_ENV') === 'production'
+
+        if (isProduction) {
+          // render configuration
+          return {
+            type: 'postgres',
+            url: configService.get('DATABASE_URL'),
+            entities: [User, Blogger, Suggestion],
+            synchronize: false,
+            dropSchema: false,
+            ssl: { rejectUnauthorized: false },
+          }
+        } else {
+          return {
+            type: 'postgres',
+            host: configService.get('DB_HOST'),
+            port: parseInt(configService.get('DB_PORT')),
+            username: configService.get('DB_USERNAME'),
+            password: configService.get('DB_PASSWORD'),
+            database: configService.get('DB_NAME'),
+            entities: [User, Blogger, Suggestion],
+            synchronize: false,
+            dropSchema: false,
+            ssl: false,
+          }
+        }
+      },
       inject: [ConfigService],
     }),
     UserModule,
