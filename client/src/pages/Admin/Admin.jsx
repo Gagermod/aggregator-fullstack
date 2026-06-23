@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from 'react'
 import { toast } from 'react-toastify'
-import { BurgerMenuContext } from '@/app/providers/BurgerMenuProvider'
 import { useAuthStore } from '@/app/store'
 import { BloggerService } from '@/features/blogger/api/blogger.api'
 import CustomSelect from '@/shared/ui/CustomSelect'
+import { BurgerMenuContext } from '@/app/providers/BurgerMenuProvider'
 import styles from './Admin.module.scss'
 
 const Admin = () => {
@@ -68,10 +68,8 @@ const Admin = () => {
     fetchFormData()
   }, [])
 
-  const handleTitleChange = (id, value) =>
-    setTitles((prev) => ({ ...prev, [id]: value }))
-  const handlePhotoChange = (id, file) =>
-    setPhotos((prev) => ({ ...prev, [id]: file }))
+  const handleTitleChange = (id, value) => setTitles((prev) => ({ ...prev, [id]: value }))
+  const handlePhotoChange = (id, file) => setPhotos((prev) => ({ ...prev, [id]: file }))
 
   const handleApprove = async (id) => {
     const formData = new FormData()
@@ -100,10 +98,8 @@ const Admin = () => {
 
   const handleDirectAddSubmit = async (e) => {
     e.preventDefault()
-    const bloggerName =
-      selectedBlogger === 'other' ? otherBlogger : selectedBlogger
-    const contentType =
-      selectedContentType === 'other' ? otherContentType : selectedContentType
+    const bloggerName = selectedBlogger === 'other' ? otherBlogger : selectedBlogger
+    const contentType = selectedContentType === 'other' ? otherContentType : selectedContentType
 
     if (!bloggerName || !contentType || !newTitle || !newUrl) {
       return toast.error('Please fill all required fields.')
@@ -117,8 +113,7 @@ const Admin = () => {
     }
 
     try {
-      const createdSuggestion =
-        await BloggerService.createSuggestion(suggestionData)
+      const createdSuggestion = await BloggerService.createSuggestion(suggestionData)
       const formData = new FormData()
       formData.append('title', newTitle)
       if (newPhoto) {
@@ -151,69 +146,57 @@ const Admin = () => {
   ]
 
   return (
-    <>
+    <div className={styles.adminContainer}>
+      <div className={`${styles.leftColumn} ${showSuggestions ? styles.mobileOverlay : ''}`}>
+        <button
+          className={styles.closeSuggestionsButton}
+          onClick={() => setShowSuggestions(false)}
+        >
+          Close
+        </button>
+        <h2>Pending Suggestions</h2>
+        {isLoadingSuggestions ? (
+          <p>Loading suggestions...</p>
+        ) : suggestions.length === 0 ? (
+          <p>No pending suggestions.</p>
+        ) : (
+          <div className={styles.listWrapper}>
+            <ul className={styles.suggestionList}>
+              {suggestions.map((s) => (
+                <li key={s.id} className={styles.suggestionItem}>
+                  <div className={styles.suggestionDetails}>
+                    <p><strong>Blogger:</strong> <span className={styles.value}>{s.bloggerName}</span></p>
+                    <p><strong>Type:</strong> <span className={styles.value}>{s.contentType}</span></p>
+                    <p><strong>Link:</strong> <a href={s.links[0].url} target="_blank" rel="noopener noreferrer">{s.links[0].title}</a></p>
+                    {s.submittedBy && <p><strong>Submitted by:</strong> <span className={styles.value}>{s.submittedBy.login}</span></p>}
+                    <input type="text" placeholder="Custom title (optional)" className={styles.titleInput} value={titles[s.id] || ''} onChange={(e) => handleTitleChange(s.id, e.target.value)} />
+                    <input type="file" accept="image/*" className={styles.photoInput} onChange={(e) => handlePhotoChange(s.id, e.target.files[0])} />
+                  </div>
+                  <div className={styles.actions}>
+                    <button onClick={() => handleApprove(s.id)} className={styles.approveButton}>Approve</button>
+                    <button onClick={() => handleReject(s.id)} className={styles.rejectButton}>Reject</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
       <div className={styles.rightColumn}>
         <h2>Direct Add Content</h2>
         <form onSubmit={handleDirectAddSubmit} className={styles.directAddForm}>
-          <CustomSelect
-            options={bloggerOptions}
-            value={selectedBlogger}
-            onChange={setSelectedBlogger}
-            placeholder='Select Blogger'
-          />
+          <CustomSelect options={bloggerOptions} value={selectedBlogger} onChange={setSelectedBlogger} placeholder="Select Blogger" />
           {selectedBlogger === 'other' && (
-            <input
-              type='text'
-              placeholder='New Blogger Name'
-              value={otherBlogger}
-              onChange={(e) => setOtherBlogger(e.target.value)}
-              className={styles.titleInput}
-              required
-            />
+            <input type="text" placeholder="New Blogger Name" value={otherBlogger} onChange={(e) => setOtherBlogger(e.target.value)} className={styles.titleInput} required />
           )}
-          <CustomSelect
-            options={contentTypeOptions}
-            value={selectedContentType}
-            onChange={setSelectedContentType}
-            placeholder='Select Content Type'
-          />
+          <CustomSelect options={contentTypeOptions} value={selectedContentType} onChange={setSelectedContentType} placeholder="Select Content Type" />
           {selectedContentType === 'other' && (
-            <input
-              type='text'
-              placeholder='New Content Type'
-              value={otherContentType}
-              onChange={(e) => setOtherContentType(e.target.value)}
-              className={styles.titleInput}
-              required
-            />
+            <input type="text" placeholder="New Content Type" value={otherContentType} onChange={(e) => setOtherContentType(e.target.value)} className={styles.titleInput} required />
           )}
-          <input
-            type='text'
-            placeholder='Content Title'
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
-            className={styles.titleInput}
-            required
-          />
-          <input
-            type='url'
-            placeholder='Content URL'
-            value={newUrl}
-            onChange={(e) => setNewUrl(e.target.value)}
-            className={styles.titleInput}
-            required
-          />
-          <input
-            type='file'
-            accept='image/*'
-            className={styles.photoInput}
-            onChange={(e) => setNewPhoto(e.target.files[0])}
-          />
-          <button
-            type='submit'
-            className={styles.approveButton}
-            disabled={isSubmitting}
-          >
+          <input type="text" placeholder="Content Title" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} className={styles.titleInput} required />
+          <input type="url" placeholder="Content URL" value={newUrl} onChange={(e) => setNewUrl(e.target.value)} className={styles.titleInput} required />
+          <input type="file" accept="image/*" className={styles.photoInput} onChange={(e) => setNewPhoto(e.target.files[0])} />
+          <button type="submit" className={styles.approveButton} disabled={isSubmitting}>
             {isSubmitting ? 'Adding...' : 'Add Content'}
           </button>
         </form>
@@ -224,88 +207,7 @@ const Admin = () => {
           Show Pending ({suggestions.length})
         </button>
       </div>
-
-      {showSuggestions && (
-        <div className={`${styles.leftColumn} ${styles.mobileOverlay}`}>
-          <button
-            className={styles.closeSuggestionsButton}
-            onClick={() => setShowSuggestions(false)}
-          >
-            Close
-          </button>
-          <h2>Pending Suggestions</h2>
-          {isLoadingSuggestions ? (
-            <p>Loading suggestions...</p>
-          ) : suggestions.length === 0 ? (
-            <p>No pending suggestions.</p>
-          ) : (
-            <ul className={styles.suggestionList}>
-              {suggestions.map((s) => (
-                <li key={s.id} className={styles.suggestionItem}>
-                  <div className={styles.suggestionDetails}>
-                    <p>
-                      <strong>Blogger:</strong>
-                      <span className={styles.value}>{s.bloggerName}</span>
-                    </p>
-                    <p>
-                      <strong>Type:</strong>{' '}
-                      <span className={styles.value}>{s.contentType}</span>
-                    </p>
-                    <p>
-                      <strong>Link:</strong>
-                      <a
-                        href={s.links[0].url}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                      >
-                        {s.links[0].title}
-                      </a>
-                    </p>
-                    {s.submittedBy && (
-                      <p>
-                        <strong>Submitted by:</strong>
-                        <span className={styles.value}>
-                          {s.submittedBy.login}
-                        </span>
-                      </p>
-                    )}
-                    <input
-                      type='text'
-                      placeholder='Custom title (optional)'
-                      className={styles.titleInput}
-                      value={titles[s.id] || ''}
-                      onChange={(e) => handleTitleChange(s.id, e.target.value)}
-                    />
-                    <input
-                      type='file'
-                      accept='image/*'
-                      className={styles.photoInput}
-                      onChange={(e) =>
-                        handlePhotoChange(s.id, e.target.files[0])
-                      }
-                    />
-                  </div>
-                  <div className={styles.actions}>
-                    <button
-                      onClick={() => handleApprove(s.id)}
-                      className={styles.approveButton}
-                    >
-                      Approve
-                    </button>
-                    <button
-                      onClick={() => handleReject(s.id)}
-                      className={styles.rejectButton}
-                    >
-                      Reject
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
-    </>
+    </div>
   )
 }
 

@@ -1,8 +1,20 @@
+.adminContainer {
+  display: flex;
+  height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
 .leftColumn {
   flex-basis: 30%;
   padding: 20px;
   border-right: 1px solid #444;
-  overflow-y: auto;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 20px;
+}
+
+.leftColumn > h2 {
+  flex-shrink: 0;
 }
 
 .rightColumn {
@@ -22,31 +34,23 @@
   cursor: pointer;
 }
 
-@include tablet {
-  .leftColumn,
-  .rightColumn {
-    flex-basis: 100%;
-    border-right: none;
-    text-align: left;
-  }
-
-  .rightColumn {
-    text-align: center;
-    border-bottom: 1px solid #444;
-    padding-bottom: 40px;
-  }
-
-  .leftColumn {
-    padding-top: 40px;
-    h2 {
-      text-align: center;
-    }
-  }
+.closeSuggestionsButton {
+  display: none;
 }
 
 @include mobile {
+  .adminContainer {
+    height: auto;
+    display: block;
+  }
+
   .leftColumn {
     display: none;
+  }
+
+  .rightColumn {
+    border: none;
+    padding: 20px;
   }
 
   .mobileOverlay {
@@ -66,18 +70,36 @@
   .showSuggestionsButton {
     display: inline-block;
   }
+
+  .closeSuggestionsButton {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: 1px solid #444;
+    color: var(--color-white);
+    padding: 5px 10px;
+    cursor: pointer;
+    z-index: 101;
+  }
 }
 
-.closeSuggestionsButton {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: 1px solid #444;
-  color: var(--color-white);
-  padding: 5px 10px;
-  cursor: pointer;
-  z-index: 101;
+.listWrapper {
+  overflow-y: auto;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-green) transparent;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-green);
+  }
 }
 
 .suggestionList {
@@ -86,39 +108,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-bottom: 40vh;
-
-  @include tablet {
-    width: 400px;
-    margin: 20px auto 0;
-    max-height: 50vh;
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-green) transparent;
-
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: var(--color-green);
-    }
-  }
-
-  @include mobile {
-    max-height: none;
-    overflow-y: auto;
-    scroll-snap-type: none;
-  }
-
-  @include mobile-s {
-    width: 95%;
-  }
 }
 
 .suggestionItem {
@@ -128,10 +117,6 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-
-  @include tablet {
-    scroll-snap-align: start;
-  }
 }
 
 .suggestionDetails {

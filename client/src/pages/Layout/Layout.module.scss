@@ -7,11 +7,3 @@
 .contentWrapper {
   flex-grow: 1;
 }
-
-.adminLayout {
-  display: flex;
-
-  @include tablet {
-    flex-direction: column-reverse;
-  }
-}

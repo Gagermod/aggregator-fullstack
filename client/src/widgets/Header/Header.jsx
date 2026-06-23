@@ -41,7 +41,7 @@ const Header = () => {
               isOpen={isVisibleModal}
               onClose={() => setIsVisibleModal(false)}
             />
-            <span className='hidden-mobile'>v1.0.0</span>
+            <span className='hidden-mobile'>v2.0.0</span>
             {isHomePage && isBurgerVisible && (
               <BurgerButton
                 className='visible-tablet'
