@@ -5,17 +5,11 @@ import { router } from '@/app/router'
 import { useAuthStore } from '@/app/store'
 
 const App = () => {
-  const { isAuthenticated, syncLocalFavorites, checkAuth } = useAuthStore()
+  const { checkAuth } = useAuthStore()
 
   useEffect(() => {
     checkAuth()
   }, [checkAuth])
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      syncLocalFavorites()
-    }
-  }, [isAuthenticated, syncLocalFavorites])
 
   return (
     <>

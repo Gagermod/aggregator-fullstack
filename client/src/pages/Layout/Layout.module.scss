@@ -1,10 +1,17 @@
 .Layout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 }
 
-.mainContent {
+.contentWrapper {
   flex-grow: 1;
-  min-height: 0;
+}
+
+.adminLayout {
+  display: flex;
+
+  @include tablet {
+    flex-direction: column-reverse;
+  }
 }

@@ -1,6 +1,6 @@
+import { toast } from 'react-toastify'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { toast } from 'react-toastify'
 import { AuthService } from '@/features/authenticate/api/auth.api'
 import { setAuthHeader, clearAuthHeader } from '@/shared/api/axios.api'
 import { setTokenToLocalStorage } from '@/shared/utils/tokenUtil'
@@ -10,7 +10,7 @@ const useAuthStore = create(
     (set, get) => ({
       user: null,
       isAuthenticated: false,
-      isLoading: false,
+      isLoading: true,
       error: null,
       favoriteBloggerIds: [],
       role: null,
@@ -28,7 +28,12 @@ const useAuthStore = create(
       checkAuth: async () => {
         const token = localStorage.getItem('token')
         if (!token) {
-          set({ favoriteBloggerIds: [], role: null, viewedBloggerIds: [] })
+          set({
+            favoriteBloggerIds: [],
+            role: null,
+            viewedBloggerIds: [],
+            isLoading: false,
+          })
           clearAuthHeader()
           return false
         }
@@ -77,15 +82,6 @@ const useAuthStore = create(
             viewedBloggerIds: data.viewedBloggerIds || [],
           })
 
-          const localFavorites = JSON.parse(
-            localStorage.getItem('favorites') || '[]'
-          )
-          if (localFavorites.length > 0) {
-            const { favoriteBloggerIds } =
-              await AuthService.syncFavorites(localFavorites)
-            set({ favoriteBloggerIds })
-          }
-
           return { success: true, data }
         } catch (err) {
           const error = Array.isArray(err.response?.data?.message)
@@ -119,7 +115,31 @@ const useAuthStore = create(
         set({ isLoading: true, error: null })
         try {
           await AuthService.registration({ login, password })
-          set({ isLoading: false })
+
+          const data = await AuthService.login({ login, password })
+          setTokenToLocalStorage(data.token)
+          setAuthHeader(data.token)
+
+          const localFavorites = JSON.parse(
+            localStorage.getItem('favorites') || '[]'
+          )
+          let finalFavorites = []
+
+          if (localFavorites.length > 0) {
+            const { favoriteBloggerIds } =
+              await AuthService.syncFavorites(localFavorites)
+            finalFavorites = favoriteBloggerIds
+          }
+
+          set({
+            user: data,
+            isAuthenticated: true,
+            isLoading: false,
+            favoriteBloggerIds: finalFavorites,
+            role: data.role,
+            viewedBloggerIds: data.viewedBloggerIds || [],
+          })
+
           return { success: true }
         } catch (err) {
           const error = Array.isArray(err.response?.data?.message)

@@ -12,6 +12,11 @@
   border: var(--border);
   background-color: var(--color-black-elevate);
   row-gap: 20px;
+
+  @include mobile-s {
+    width: 95%;
+    padding-inline: 15px;
+  }
 }
 
 .input,

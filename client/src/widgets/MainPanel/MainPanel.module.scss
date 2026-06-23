@@ -48,14 +48,6 @@
   scrollbar-color: var(--color-green) transparent;
   scroll-snap-type: x mandatory;
 
-  //  & > li:first-child {
-  //    padding-left: var(--padding);
-  //  }
-  //
-  //  & > li:last-child {
-  //    padding-right: var(--padding);
-  //  }
-
   &::-webkit-scrollbar {
     height: 4px;
   }

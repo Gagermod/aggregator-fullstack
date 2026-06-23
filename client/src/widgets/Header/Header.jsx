@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { BurgerMenuContext } from '@/app/providers/BurgerMenuProvider'
 import { useAuthStore } from '@/app/store'
 import Auth from '@/features/authenticate'
@@ -7,10 +8,13 @@ import Logo from '@/shared/ui/Logo'
 import styles from './Header.module.scss'
 
 const Header = () => {
-  const { isMenuOpen, setIsMenuOpen } = useContext(BurgerMenuContext)
+  const { isMenuOpen, setIsMenuOpen, isBurgerVisible } =
+    useContext(BurgerMenuContext)
   const [isVisibleModal, setIsVisibleModal] = useState(false)
+  const { user, isAuthenticated } = useAuthStore()
+  const location = useLocation()
 
-  const { user, isAuthenticated, logout } = useAuthStore()
+  const isHomePage = location.pathname === '/'
 
   return (
     <>
@@ -37,12 +41,14 @@ const Header = () => {
               isOpen={isVisibleModal}
               onClose={() => setIsVisibleModal(false)}
             />
-            <span className='hidden-mobile'>v2.0.0</span>
-            <BurgerButton
-              className='visible-tablet'
-              isActive={isMenuOpen}
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            />
+            <span className='hidden-mobile'>v1.0.0</span>
+            {isHomePage && isBurgerVisible && (
+              <BurgerButton
+                className='visible-tablet'
+                isActive={isMenuOpen}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              />
+            )}
           </div>
         </div>
       </header>
